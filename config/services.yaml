@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+#    # аліас для інтерфейсу
+#    App\Interfaces\Service\ReaderInterface:
+#        alias: App\Service\Reader\FileReader
+#
+#    App\Interfaces\Service\TimeFormatterInterface:
+#        alias: App\Service\Calculate\TimeFormatter

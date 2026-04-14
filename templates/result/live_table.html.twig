@@ -1,0 +1,105 @@
+<div id="live-table">
+    <div>
+        <table class="table table-sm table-striped table-bordered mb-0 leaderboard-table">
+
+
+            <div class="tech-info">
+               <p>Дані актуальні станом на: <b>{{ event.getData|date('H:i:s') }}</b>&nbsp;{{ event.getData|date('d/m/Y') }}<p>
+                <p>Рекорд кола: <b>{% if record %}  {{  record.bestLap~' | #'~ record.riderId ~' | '~ record.name }} {% else %} - {% endif %}</b></p>
+            </div>
+
+
+            <thead class="thead-light">
+            <tr>
+                <th>Позиція</th>
+                <th>#</th>
+                <th>Імʼя гонщика</th>
+                <th>Усього кіл</th>
+                <th>Найкраще коло</th>
+                <th>Найповільніше коло</th>
+                <th>Відставання</th>
+                <th>Загальний час</th>
+                <th>Деталі</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% set position = 1 %}
+
+            {% for racer in lapsData %}
+
+                {# ===== Основная строка гонщика ===== #}
+                <tr class="main-row" data-id="{{ racer.getNumber }}">
+                    <td class="text-center font-weight-bold">
+                        {% if position == 1 %}
+                            <span style="font-size:24px; color:gold;">1</span>
+                        {% elseif position == 2 %}
+                            <span style="font-size:24px; color:silver;">2</span>
+                        {% elseif position == 3 %}
+                            <span style="font-size:24px; color:#cd7f32;">3</span>
+                        {% else %}
+                            <span style="font-size:16px; color:#333;">{{ position }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ racer.getNumber }}</td>
+                    <td>{{ racer.getName }}</td>
+                    <td>{{ racer.getStatus == 'DNF' ? '-' : racer.getTotalLaps }}</td>
+                    <td>{{ racer.getBestLapTime }}</td>
+                    <td>{{ racer.getWorstLapTime }}</td>
+                    <td style="
+                    {% if racer.getStatus == 'DNF' %}
+                            color: #9CA3AF;
+                    {% else %}
+                        {% set diff = racer.getDiffMs ?? 0 %}
+
+                        {% if diff <= 0 %}
+                                color: #000;
+                        {% elseif diff < 30000 %}
+                                color: #22C55E;
+                        {% elseif diff < 120000 %}
+                                color: #F97316;
+                        {% else %}
+                                color: #EF4444;
+                        {% endif %}
+                    {% endif %}
+                            ">
+                        {{ racer.getStatus == 'DNF' ? '' : racer.getDiff }}
+                    </td>
+                    <td><b>{{ racer.getStatus == 'DNF' ? 'DNF' : racer.getTotalTime }}</b></td>
+                    <td>
+                        {% if racer.getStatus != 'DNF' %}
+                            <button class="btn btn-sm btn-outline-primary toggle-details" data-id="{{ racer.getNumber }}">
+                                <span class="toggle-icon">+</span>
+                            </button>
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {# ===== Скрытая строка с деталями ===== #}
+                <tr class="details-row" id="details-{{ racer.getNumber }}" style="display:none;">
+                    <td colspan="9" class="bg-light">
+                        <div class="p-3">
+                            <h6 class="fw-bold mb-3">Деталі кіл — {{ racer.getName }}</h6>
+                            <div class="row">
+                                {% for lapTime in racer.getLapsTimes %}
+                                    <div class="col-6 col-md-3 col-lg-2 mb-2">
+                                        <div class="border rounded p-2 text-center bg-white">
+                                            <small class="text-muted">Коло {{ loop.index }}</small>
+                                            <div class="fw-semibold">{{ lapTime }}</div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                {% set position = position + 1 %}
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</div>

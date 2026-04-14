@@ -1,0 +1,500 @@
+/* ОБЩЕ */
+/* Базово */
+.event-image {
+    display: block;
+    object-fit: cover;
+}
+
+/* 🏁 Сторінка події */
+.event-image--page {
+    width: 100%;          /* або 50vw як раніше */
+    max-width: 720px;
+    aspect-ratio: 16 / 9; /* зберігає пропорції блоку */
+    border-radius: 16px;
+    object-fit: contain;   /* 🔹 ключ: вся картинка поміщається */
+    background: #f0f0f0;   /* фоновий колір якщо пропорції не збігають */
+}
+
+/* 📋 Список подій */
+.event-image--list {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.event-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-header__content {
+    width: 100%;
+    max-width: 720px;
+}
+
+/* 🔥 Заголовок + кнопка в один ряд */
+.event-header__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* ← прижимає кнопку вправо */
+    gap: 1rem;
+}
+
+/* Общие стили для всех устройств */
+.hero-section {
+    position: relative;
+    background: url('seo/twitter.png') no-repeat center center;
+    background-size: cover;
+    height: 400px; /* десктоп */
+}
+
+.hero-section .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+}
+
+.hero-section .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+    padding-bottom: 20px;
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+
+.btn-primary-custom {
+    background-color: #007bff;
+    border: none;
+}
+.btn-primary-custom:hover {
+    background-color: #0056b3;
+}
+.feature-box {
+    text-align: center;
+    padding: 30px;
+}
+.feature-box h3 {
+    margin-top: 20px;
+}
+.feature-box p {
+    margin-top: 10px;
+}
+.event-name-cell {
+    position: relative;
+    padding-bottom: 25px; /* место под счетчик */
+}
+
+.event-name {
+    font-weight: 700; /* жирное название */
+    font-size: 16px;
+}
+
+.event-description {
+    font-size: 12px;
+    color: #6c757d; /* серый, мелкий текст */
+    margin-top: 2px;
+}
+
+.event-views {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 12px;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.event-views i {
+    font-size: 13px;
+}
+
+.event-name-cell {
+    position: relative; /* чтобы внутренние абсолютные элементы позиционировались относительно td */
+}
+
+.event-date {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 0.8em;
+    color: #666; /* можно изменить цвет */
+}
+
+.live-text {
+    animation: blink 1s steps(1, start) infinite;
+}
+
+#table-search,
+#filter-select{
+    font-weight: 600;
+    border: 2px solid #0d6efd;
+    padding: 6px 10px;
+    height: auto;
+}
+
+/* placeholder чуть заметнее */
+#table-search::placeholder{
+    font-weight: 500;
+    color: #6c757d;
+}
+
+/* эффект при фокусе */
+#table-search:focus,
+#filter-select:focus{
+    border-color: #0a58ca;
+    box-shadow: 0 0 0 0.15rem rgba(13,110,253,.25);
+}
+
+/* на мобильных чуть крупнее */
+@media (max-width: 768px){
+    #table-search,
+    #filter-select{
+        font-size: 15px;
+    }
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* --- Мобильная адаптация --- */
+@media (max-width: 767px) {
+
+    /* Название и описание */
+    .event-name {
+        font-size: 14px;
+    }
+
+    .event-description {
+        font-size: 10px;
+    }
+
+    /* Просмотры */
+    .event-views {
+        font-size: 11px;
+        bottom: 2px;
+        right: 4px;
+    }
+
+    .event-views i {
+        font-size: 12px;
+    }
+
+    /* Дата */
+    .event-date {
+        font-size: 10px;
+        bottom: 2px;
+        left: 2px;
+        padding: 1px 3px;
+    }
+
+    /* Кнопка */
+    td a.btn {
+        display: block;       /* кнопка занимает всю ширину ячейки */
+        width: 100%;
+        font-size: 14px;
+        padding: 6px 0;
+        text-align: center;
+    }
+
+    /* Изображение */
+    td img {
+        width: 100%;          /* изображение подстраивается под ширину экрана */
+        height: auto;
+    }
+
+
+    /* 📱 Мобільна версія */
+    @media (max-width: 768px) {
+        .event-image--page {
+            width: 100%;      /* на мобі — на всю ширину */
+            max-width: 100%;
+            aspect-ratio: 4 / 3;
+        }
+    }
+
+    /* 📱 мобільна */
+    @media (max-width: 768px) {
+        .event-header__content {
+            width: 100%;
+        }
+    }
+
+    /* 📱 Мобільна версія */
+    @media (max-width: 576px) {
+        .event-header__row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    /* Мобильные устройства */
+    @media (max-width: 768px) {
+        .hero-section {
+            height: 300px; /* уменьшаем высоту на мобилках */
+            padding: 0 10px; /* отступы по бокам */
+        }
+
+        .hero-section .hero-content {
+            font-size: 1rem; /* уменьшаем текст */
+            padding-bottom: 15px;
+        }
+
+        /* Можно уменьшить затемнение фона, чтобы картинка была ярче */
+        .hero-section .overlay {
+            background: rgba(0,0,0,0.2);
+        }
+    }
+
+    /* Очень маленькие экраны */
+    @media (max-width: 480px) {
+        .hero-section {
+            height: 120px; /* компактнее для телефонов */
+        }
+
+        .hero-section .hero-content {
+            font-size: 0.9rem;
+            padding-bottom: 10px;
+        }
+    }
+}
+
+/* Карточка */
+.event-card {
+    transition: transform .15s ease, box-shadow .15s ease;
+    display: block;
+}
+
+.event-card:hover {
+    transform: translateY(-4px);
+}
+
+.card {
+    border-radius: 18px;
+}
+
+/* Картинка */
+.event-img-wrapper {
+    height: 170px;
+    overflow: hidden;
+}
+
+.event-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobile оптимизация */
+@media (max-width: 576px) {
+    .event-img-wrapper {
+        height: 140px;
+    }
+}
+
+/* ================= HERO ================= */
+
+.event-hero {
+    position: relative;
+    height: 260px;
+}
+
+.event-hero__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-hero__overlay {
+    position: absolute;
+    inset: 0;
+    padding: 24px;
+    color: #fff;
+    background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.75));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+/* ================= TABLE ================= */
+
+.leaderboard-table thead {
+    background: #f8f9fa;
+    font-size: 14px;
+}
+
+.leaderboard-row:hover {
+    background: #fafafa;
+}
+
+.leaderboard-row td {
+    padding: 14px 10px;
+}
+
+.leaderboard-table tr.active-row {
+    background-color: #e7f1ff !important;
+    transition: background-color 0.2s ease;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 576px) {
+
+    .event-hero {
+        height: 200px;
+    }
+
+    .leaderboard-table {
+        font-size: 13px;
+    }
+}
+
+
+.event-cover {
+    height: 240px;
+    object-fit: cover;
+    border-radius: 16px 0 0 16px;
+}
+
+@media (max-width: 768px) {
+    .event-cover {
+        border-radius: 16px 16px 0 0;
+        height: 200px;
+    }
+}
+
+.badge-keyword {
+    display: inline-block;
+    background-color: #e9ecef;
+    color: #495057;
+    font-size: 0.85rem;
+    padding: 0.35em 0.75em;
+    border-radius: 12px;
+    margin: 2px 4px 2px 0;
+    transition: background-color 0.2s;
+    cursor: default;
+}
+
+.badge-keyword:hover {
+    background-color: #dee2e6;
+}
+
+.search-highlight {
+    background-color: #28a745 !important; /* зелёный */
+    color: #fff;
+}
+
+/* ===== RIDERS PAGE ===== */
+
+.rider-name {
+    font-size: 15px;
+    min-height: 38px; /* чтобы карточки были ровные */
+}
+
+/* Hover как у event */
+.event-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Поиск */
+#riderSearch {
+    border-radius: 12px;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+
+    .rider-name {
+        font-size: 14px;
+    }
+
+}
+
+.event-item {
+    transition: 0.2s ease;
+}
+
+.event-img-wrapper {
+    height: 180px;
+    overflow: hidden;
+}
+
+.event-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.lapchart-section {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.lapchart-btn {
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid #0d6efd;
+    color: #0d6efd;
+    transition: all 0.2s ease;
+}
+
+.lapchart-btn:hover {
+    background: #0d6efd;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.lapchart-btn.active {
+    background: #0d6efd;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(13,110,253,0.25);
+}
+
+
+.tech-info {
+    max-width: 900px;
+    margin: 0 auto 10px auto;
+    font-size: 13px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+}
+
+/*class filter*/
+/* 🔴 ТОП (сильнейшие) */
+.class-1  { background-color: #ef9a9a !important; }
+.class-2  { background-color: #ffcdd2 !important; }
+
+/* 🟢 СИЛЬНЫЕ (отдельный блок) */
+.class-3  { background-color: #a5d6a7 !important; }
+.class-4  { background-color: #c8e6c9 !important; }
+
+/* 🟡 СРЕДНИЕ */
+.class-5  { background-color: #fff9c4 !important; }
+.class-6  { background-color: #fff59d !important; }
+
+/* 🟠 НИЖЕ СРЕДНЕГО */
+.class-7  { background-color: #ffe0b2 !important; }
+.class-8  { background-color: #ffcc80 !important; }
+
+/* 🔵 СЛАБЫЕ */
+.class-9  { background-color: #bbdefb !important; }
+.class-10 { background-color: #90caf9 !important; }
+
+/* ⚪ АУТСАЙДЕРЫ */
+.class-11 { background-color: #e0e0e0 !important; }
+.class-12 { background-color: #f5f5f5 !important; }

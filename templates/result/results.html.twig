@@ -1,0 +1,259 @@
+{% extends 'base/base.html.twig' %}
+
+{% block seo %}
+    {% include 'seo/seo_results.html.twig' %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container py-4">
+
+        {# ===================================================== #}
+        {# HEADER: фото слева + текст справа                    #}
+        {# ===================================================== #}
+
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="row g-0 align-items-center">
+
+                {# Фото #}
+                <div class="col-12 col-md-4">
+                    <img
+                            src="{{ asset(event.getEventImg) }}"
+                            alt="{{ event.getName }}"
+                            class="event-cover img-fluid w-100"
+                            loading="lazy"
+                    >
+                </div>
+
+                {# Контент #}
+                <div class="col-12 col-md-8 p-4">
+
+                    <h1 class="h3 fw-bold mb-2">
+                        {{ event.getName }}
+                    </h1>
+
+                    {% if event.getDescription %}
+                        <p class="text-muted mb-3">
+                            {{ event.getDescription }}
+                        </p>
+                    {% endif %}
+
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+
+                        {% if event.getDate %}
+                            <span class="badge bg-light text-dark border">
+                             {{ event.getDate|date("d.m.Y") }}
+                        </span>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        {# ===================================================== #}
+        {# FILTER                                               #}
+        {# ===================================================== #}
+
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+
+            <h5 class="mb-0 fw-semibold">
+                {% if selectedFilter == 'all' %}
+                    Усі класи
+                {% else %}
+                    Клас: {{ selectedFilter|upper }}  {% if selectedFilter != 'all' %}
+                    <a href="{{ url('lapchart', {'id': id, 'filter': selectedFilter}) }}"
+                       target="_blank"
+                       class="btn btn-sm btn-outline-primary">
+                        Таблиця кіл
+                    </a>
+                {% endif %}
+                {% endif %}
+            </h5>
+            <input
+                    type="text"
+                    id="table-search"
+                    class="form-control form-control-sm"
+                    placeholder="Пошук гонщика / номер..."
+                    style="width:220px"
+            >
+            {% if selectedFilter == 'all' %}
+                <button id="toggle-highlight" class="btn btn-sm btn-outline-secondary">
+                    Підсвітка класів
+                </button>
+            {% endif %}
+            <select id="filter-select" class="form-control form-control-sm w-auto">
+                {% for key, value in filter %}
+                    <option value="{{ key }}" {% if selectedFilter == key %}selected{% endif %}>
+                        {{ value }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+
+        {# ============================================ #}
+        {# ПОКРУГОВКИ КЛАСІВ                           #}
+        {# ============================================ #}
+        {% if selectedFilter == 'all'  %}
+            <div class="lapchart-section mt-4 p-4 rounded-4 shadow-sm">
+
+                <h6 class="fw-bold mb-3 text-uppercase text-muted">
+                    Деталізація результатів по колах
+                </h6>
+
+                <p class="small text-muted mb-3">
+                    Оберіть клас для перегляду детальної таблиці результатів по кожному колу.
+                    Кожна таблиця відкриється в новій вкладці.
+                </p>
+
+                <div class="d-flex flex-wrap gap-2">
+
+                    {% for key, value in filter %}
+                        {% if key != 'all' %}
+                            <a href="{{ url('lapchart', {'id': id, 'filter': key}) }}"
+                               class="lapchart-btn {% if selectedFilter == key %}active{% endif %}"
+                               target="_blank">
+                                {{ value }}
+                            </a> &nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        {% endif %}
+
+        <br>
+        <div class="d-flex flex-wrap gap-2">
+            <p>Рекорд кола: <b>{% if record %}  {{  record.bestLap~' | #'~ record.riderId ~' | '~record.class~' | '~ record.name }} {% else %} - {% endif %}</b></p>
+        </div>
+
+
+        {# ===================================================== #}
+        {# TABLE (твоя логика полностью сохранена)               #}
+        {# ===================================================== #}
+
+        <div class="card border-0 shadow-sm rounded-4">
+            <div>
+
+                <table class="table table-sm table-striped table-bordered mb-0 leaderboard-table">
+
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Позиція</th>
+                        <th>#</th>
+                        <th>Імʼя гонщика</th>
+                        <th>Клас</th>
+                        <th>Усього кіл</th>
+                        <th>Найкраще коло</th>
+                        <th>Найповільніше коло</th>
+                        <th>Загальний час</th>
+                        <th>Деталі</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% set position = 1 %}
+
+                    {% for eventRider in lapsData %}
+
+                        {# ===== ОСНОВНАЯ СТРОКА ===== #}
+                        <tr class="main-row" data-id="{{ eventRider.getNumber }}">
+
+                            <td class="text-center fw-bold">
+                                {% if position == 1 %} 🥇
+                                {% elseif position == 2 %} 🥈
+                                {% elseif position == 3 %} 🥉
+                                {% else %} {{ position }}
+                                {% endif %}
+                            </td>
+
+                            <td>{{ eventRider.getNumber }}</td>
+                            <td>{{ eventRider.getName }}</td>
+                            <td>{{ eventRider.getClass }}</td>
+                            <td>
+                                {{ eventRider.getStatus in ['DNF','DSQ'] ? '-' : eventRider.getTotalLaps }}
+                            </td>
+
+                            <td>{{ eventRider.getBestLapTime }}</td>
+                            <td>{{ eventRider.getWorstLapTime }}</td>
+
+                            <td>
+                                <b>
+                                    {{ eventRider.getStatus in ['DNF','DSQ'] ? eventRider.getStatus : eventRider.getTotalTime }}
+                                </b>
+                            </td>
+
+                            <td>
+                                {% if eventRider.getStatus not in ['DNF','DSQ'] %}
+                                    <button class="btn btn-sm btn-outline-primary toggle-details"
+                                            data-id="{{ eventRider.getNumber }}">
+                                        <span class="toggle-icon">+</span>
+                                    </button>
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        {# ===== СКРЫТАЯ СТРОКА С ДЕТАЛЯМИ ===== #}
+                        <tr class="details-row" id="details-{{ eventRider.getNumber }}" style="display:none;">
+                            <td colspan="9" class="bg-light">
+
+                                <div class="p-3">
+                                    <h6 class="fw-bold mb-3">
+                                        Деталі кіл — {{ eventRider.getName }} | {{ eventRider.getClass }}
+                                    </h6>
+
+                                    <div class="row">
+                                        {% for lapId,lapTime in eventRider.getLapsTimes %}
+                                            <div class="col-6 col-md-3 col-lg-2 mb-2">
+                                                <div class="border rounded p-2 text-center bg-white">
+                                                    <small class="text-muted">Коло {{ lapId }}</small>
+                                                    <div class="fw-semibold">{{ lapTime }}</div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        {% set position = position + 1 %}
+
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+
+        {% if event.getKeywords %}
+            {% set keywords = event.getKeywords|split(',') %}
+            <div class="mt-4">
+                {% for keyword in keywords %}
+                    <span class="badge badge-keyword">{{ keyword|trim }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </div>
+
+
+    {# JS #}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets/script/search_on_page.js') }}?ver=0.0.3"></script>
+    <script src="{{ asset('assets/script/filter.js') }}?ver=0.0.5"></script>
+{% endblock %}
+
+
+{% block footer %}
+    {% include ('base/footer.html.twig') %}
+{% endblock %}

@@ -1,0 +1,68 @@
+<title>Список спортсменів ендуро України — база райдерів, статистика, результати гонок</title>
+
+<meta name="description"
+      content="Повний список спортсменів ендуро України: база райдерів, статистика стартів, фінішів, результати гонок, класи участі. Актуальні дані чемпіонатів з хард ендуро та кантрі-кросу.">
+
+<meta name="keywords"
+      content="спортсмени ендуро україна, список райдерів ендуро, база спортсменів ендуро, райдери хард ендуро, кантрі крос україна спортсмени, статистика райдерів, результати ендуро україна, ендуро чемпіонат україни спортсмени, hard enduro riders ukraine, enduro riders database, список спортсменів мотоспорт україна, мотокрос спортсмени україни, ендуро результати гонок, райдери кантрі кросу, спортсмени федерації мотоспорту, учасники ендуро гонок, база даних райдерів, рейтинг спортсменів ендуро, топ райдери україни ендуро, motocross riders ukraine, enduro statistics ukraine">
+
+<link rel="canonical" href="{{ absolute_url(path('riders')) }}">
+
+<meta name="robots" content="index, follow">
+
+<!-- ================= Open Graph / Facebook ================= -->
+
+<meta property="og:title"
+      content="Список спортсменів ендуро України">
+
+<meta property="og:description"
+      content="База райдерів ендуро України: статистика стартів, фінішів, результати гонок та профілі спортсменів.">
+
+<meta property="og:type" content="website">
+
+<meta property="og:url"
+      content="{{ absolute_url(path('riders')) }}">
+
+<meta property="og:image"
+      content="{{ absolute_url(path('main_page')) }}assets/seo/og.png">
+
+<meta property="og:site_name"
+      content="Chronolog">
+
+<meta property="og:locale"
+      content="uk_UA">
+
+<!-- ================= Twitter Card ================= -->
+
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="twitter:title"
+      content="Список спортсменів ендуро України">
+
+<meta name="twitter:description"
+      content="Статистика та база спортсменів ендуро України: результати, класи, профілі райдерів.">
+
+<meta name="twitter:image"
+      content="{{ absolute_url(path('main_page')) }}assets/seo/og.png">
+
+<meta name="twitter:site"
+      content="@Chronolog">
+
+<!-- ================= Schema.org ================= -->
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Список спортсменів ендуро України",
+        "url": "{{ absolute_url(path('riders')) }}",
+        "numberOfItems": {{ riders|length }},
+        "itemListElement": [
+            {
+                "@type": "Person",
+                "name": "Спортсмени ендуро України",
+                "url": "{{ absolute_url(path('riders')) }}"
+            }
+        ]
+    }
+</script>

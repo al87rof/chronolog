@@ -1,0 +1,61 @@
+# config/routes.yaml
+
+main_page:
+    path: /
+    defaults: { _controller: App\Controller\DefaultController::indexAction }
+
+upload:
+    path: /upload
+    defaults: { _controller: App\Controller\DefaultController::uploadAction }
+
+result:
+    path: /result/{id}
+    defaults: { _controller: App\Controller\DefaultController::resultAction }
+
+lapchart:
+    path: /lapchart/{id}
+    defaults: { _controller: App\Controller\DefaultController::lapchartAction }
+
+events:
+    path: /events
+    defaults: { _controller: App\Controller\DefaultController::eventsAction }
+
+rider:
+    path: /rider-{id}
+    defaults: { _controller: App\Controller\RiderController::riderAction }
+    requirements:
+        id: \d+
+
+riders:
+    path: /riders
+    defaults: { _controller: App\Controller\RiderController::ridersAction }
+
+sitemap:
+    path: /sitemap.xml
+    defaults: { _controller: App\Controller\SiteMapController::siteMapAction }
+
+robots:
+    path: /robots.txt
+    defaults: { _controller: App\Controller\DefaultController::robotsAction }
+
+404:
+    path: /404/
+    defaults: { _controller: App\Controller\DefaultController::notFoundAction }
+
+# LIVE
+create_live_event:
+    path: /event/live/create
+    defaults: { _controller: App\Controller\DefaultController::createLiveEventAction }
+
+live_event:
+    path: /event/live/{id}
+    defaults: { _controller: App\Controller\DefaultController::liveEventAction }
+
+live_event_ajax:
+    path: /event-live-upd
+    defaults: { _controller: App\Controller\DefaultController::liveAjaxAction }
+
+# API
+api:
+    path: /api/live
+    defaults: { _controller: App\Controller\ApiController::updLiveEventsAction }

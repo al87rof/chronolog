@@ -1,0 +1,75 @@
+{% extends 'base/base.html.twig' %}
+
+{% block seo %}
+   {% include 'seo/seo_riders.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+
+        <!-- HEADER -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+
+            <h2 class="fw-bold mb-0">
+                Загальний список спортсменів
+            </h2>
+
+            <!-- Поиск -->
+            <div style="max-width:280px; width:100%;">
+                <input type="text"
+                       id="riderSearch"
+                       class="form-control"
+                       placeholder="🔎 Пошук спортсмена...">
+            </div>
+
+        </div>
+
+        <!-- GRID -->
+        <div class="row g-4" id="ridersGrid">
+
+            {% for rider in riders %}
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3 rider-item">
+
+                    <a href="{{ url('rider', {'id': rider.getId}) }}"
+                       class="event-card text-decoration-none text-dark">
+
+                        <div class="card border-0 shadow-sm h-100 text-center p-3">
+
+                            <!-- AVATAR -->
+                            <div class="mb-3">
+
+
+                                    <!-- Заглушка -->
+                                    <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center m-auto"
+                                         style="width:90px;height:90px;font-weight:700;font-size:28px;">
+                                        {{ rider.getName|slice(0,1) }}
+                                    </div>
+
+
+                            </div>
+
+                            <!-- NAME -->
+                            <div class="fw-bold rider-name">
+                                {{ rider.getName }}
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- EMPTY -->
+        <div id="noResults"
+             class="text-center text-muted py-5"
+             style="display:none;">
+            Нічого не знайдено
+        </div>
+
+    </div>
+
+    <script src="{{ asset('assets/script/search_on_riders_page.js') }}"></script>
+{% endblock %}
+
+

@@ -1,0 +1,55 @@
+    <!-- ================= SEO ================= -->
+
+    <title>{{ rider.getName }} — статистика та результати гонок ендуро України</title>
+
+    <meta name="description"
+          content="Статистика та результати гонок {{ rider.getName }}. Стартів: {{ events|length }}. Повна база райдерів ендуро України.">
+
+    <meta name="keywords"
+          content="{{ rider.getName }}, ендуро, результати гонок, статистика, стартів, фінішів, перемоги, подіуми, мотоспорт, hard enduro, кантрі-крос, база райдерів, Україна">
+
+    <link rel="canonical" href="{{ absolute_url(path('rider', {'id': rider.getId})) }}">
+
+    <meta name="robots" content="index, follow">
+
+    <!-- ================= Open Graph / Facebook ================= -->
+
+    <meta property="og:title" content="{{ rider.getName }} — статистика та результати гонок">
+    <meta property="og:description" content="Статистика та результати гонок {{ rider.getName }}: старти, фініші, подіуми, перемоги. Повна база райдерів ендуро України.">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="{{ absolute_url(path('rider', {'id': rider.getId})) }}">
+    <meta property="og:image" content="{{ absolute_url(path('main_page')) }}assets/seo/og.png">
+    <meta property="og:site_name" content="Chronolog">
+    <meta property="og:locale" content="uk_UA">
+
+    <!-- ================= Twitter Card ================= -->
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ rider.getName }} — статистика та результати гонок">
+    <meta name="twitter:description" content="Стартів: {{ events|length }}. Повна база райдерів ендуро України.">
+    <meta name="twitter:image" content="{{ absolute_url(path('main_page')) }}assets/seo/og.png">
+    <meta name="twitter:site" content="@chronolog">
+
+    <!-- ================= Schema.org / JSON-LD ================= -->
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ rider.getName }}",
+  "url": "{{ absolute_url(path('rider', {'id': rider.getId})) }}",
+  "image": "{{ absolute_url(path('main_page')) }}assets/seo/og.png",
+  "jobTitle": "Ендуро райдер",
+  "affiliation": {
+    "@type": "Organization",
+    "name": "Chronolog"
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "Стартів",
+      "value": "{{ events|length }}"
+    }
+  ]
+}
+</script>

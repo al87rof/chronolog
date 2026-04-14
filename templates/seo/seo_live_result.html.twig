@@ -1,0 +1,34 @@
+{% set title = event is defined ? 'LIVE результати — ' ~ event.getTitle : 'LIVE результати мотогонок' %}
+{% set description = event is defined
+        ? 'Онлайн результати ' ~ event.getTitle ~ '. Позиції гонщиків, кола, найкращі результати та час в режимі онлайн.'
+        : 'Онлайн результати мотогонок у реальному часі. Позиції, кола та статистика.'
+%}
+
+{% set image =  absolute_url(path('main_page'))~event.getEventImg %}
+
+<title>{{ title }}</title>
+
+<meta name="description" content="{{ description }}">
+<meta name="keywords" content="мотокрос результати, live результати гонки, motocross live results, lap timing, результати мотогонок">
+<meta name="robots" content="index,follow">
+
+{# Open Graph (Telegram, Viber, Facebook, LinkedIn) #}
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:image" content="{{ image }}">
+<meta property="og:image:secure_url" content="{{ image }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ app.request.uri }}">
+<meta property="og:site_name" content="ChronoLog">
+<meta property="og:locale" content="uk_UA">
+
+{# Twitter / X #}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ title }}">
+<meta name="twitter:description" content="{{ description }}">
+<meta name="twitter:image" content="{{ image }}">
+
+{# Canonical #}
+<link rel="canonical" href="{{ app.request.uri }}">

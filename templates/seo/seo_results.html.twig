@@ -1,0 +1,66 @@
+<meta charset="UTF-8">
+
+<title>{% block title %}Результати перегонів — {{ event.name }} | Часи кіл та статистика{% endblock %}</title>
+
+{% block meta %}
+
+    {# Basic SEO #}
+    <meta name="description"
+          content="Офіційні результати перегонів {{ event.name }}: часи кіл, позиції гонщиків, статистика та підсумкові протоколи. {{ event.getDescription }}">
+
+    <meta name="keywords"
+          content="результати перегонів, {{ event.name }}, ендуро результати, кантрі-крос результати, часи кіл, chronoLog">
+
+    <meta name="robots"
+          content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+
+    <link rel="canonical" href="{{ absolute_url(path('result',{'id':event.getHash})) }}">
+
+    {# Open Graph #}
+    <meta property="og:title"
+          content="Результати перегонів та часи кіл — {{ event.name }}">
+
+    <meta property="og:description"
+          content="Дивіться детальні результати, часи кіл, рейтинги та статистику гонки {{ event.name }}.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url"  content="{{ absolute_url(path('result', {'id': event.getHash})) }}">
+
+    <meta property="og:image"
+          content="{{ absolute_url(path('main_page')) }}{{ event.getEventImg}}">
+
+    <meta property="og:site_name" content="ChronoLog">
+    <meta property="og:locale" content="uk_UA">
+
+    {# Twitter / X #}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title"
+          content="Результати — {{ event.name }}">
+    <meta name="twitter:description"
+          content="Часи кіл, позиції та статистика гонщиків.">
+    <meta name="twitter:image"
+          content="{{ absolute_url(path('main_page')) }}{{ event.getEventImg}}">
+
+    {# Telegram / fallback #}
+    <meta name="description"
+          content="Результати перегонів {{ event.name }} — протоколи, часи кіл та статистика.">
+
+    {# Schema.org SportsEvent #}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsEvent",
+      "name": "{{ event.name|e('js') }}",
+      "location": {
+              "@type": "Place",
+              "name": "Україна"
+            },
+      "startDate": "{{ event.date|date('c') }}",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": "{{ absolute_url(path('main_page')) }}{{ event.getEventImg }}",
+      "description": "{{ event.getDescription|e('js') }}",
+      "url": "{{ absolute_url(path('result',{'id':event.getHash})) }}"
+    }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    {% include 'seo/seo_lapchart.html.twig' %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    {% include 'base/favicon.html.twig' %}
+    {% include 'analytics/gtm.html.twig' %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            font-size: 14px;
+        }
+
+        h1 {
+            max-width: 900px;
+            margin: 10px auto 5px auto;
+        }
+
+        .tech-info {
+            max-width: 900px;
+            margin: 0 auto 10px auto;
+            font-size: 13px;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+        }
+
+        .rider {
+            background: #fff;
+            margin: 8px auto;
+            padding: 8px 10px;
+            max-width: 900px;
+            border: 1px solid #ccc;
+        }
+
+        .rider-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 3px 6px;
+            text-align: center;
+        }
+
+        th {
+            background: #eee;
+        }
+
+        .best {
+            background: #c8f7c5;
+            font-weight: bold;
+        }
+
+        .worst {
+            background: #f7c5c5;
+        }
+    </style>
+</head>
+<body>
+
+<h1>
+    Підсумкові результати заїзду класу
+    <span style="color:#0056b3">"{{ selectedFilter|capitalize }}"</span>
+</h1>
+
+<div class="tech-info">
+    <div><strong>Траса:</strong> <a href="{{ url('result',{'id':event.getHash}) }}"><b>{{ event.name }}</b></a></div>
+    <div><strong>Дата:</strong> {{ event.date|date('d.m.Y') }}</div>
+    <div><strong>Клас:</strong> {{ selectedFilter|capitalize }}</div>
+</div>
+
+<div class="tech-info">
+    <div><strong>* Позиція:&nbsp;</strong>Цей показник відображає позицію в гонці на момент, коли гонщик перетнув лінію фіксації на певному колі.</div>
+    <div><strong>* До лідера:&nbsp;</strong>Цей показник відображає, наскільки пізніше за лідера конкретний гонщик перетнув лінію фіксації на певному колі.</div>
+    <div><strong>* Δ Кращого кола:&nbsp;</strong>Цей показник відображає різницю у часі між поточним колом гонщика та його власним найкращим результатом у цій сесії.</div>
+    <div><strong>* Колір:&nbsp;</strong>Ваше найкраще коло у заїзді підсвічується <span style="color: green; font-weight: bold;">зеленим</span> кольором, а найгірше — <span style="color: red; font-weight: bold;">червоним</span>.</div>
+</div>
+
+{% for rider in data %}
+    {% if rider.getStatus == 'FINISHED' %}
+        <div class="rider">
+
+            <div class="rider-header">
+                <div>
+                    {{ rider.getPosition }} місце · № {{ rider.number ?? '-' }} — <a href="{{ riderCollector. getRiderUrlByName(rider.getName) }}" target="_blank">{{ rider.getName }}</a>
+                </div>
+                <div>{{ rider.getClass|upper }}</div>
+            </div>
+
+            <div class="rider-info">
+                Кіл: {{ rider.getTotalLaps }} |
+                Загальний час: {{ rider.getTotalTime }} |
+                Найкращий: {{ rider.getBestLapTime }} |
+                Найгірший: {{ rider.getWorstLapTime }}
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Коло</th>
+                    <th>Час</th>
+                    <th>* Позиція</th>
+                    <th>* До лідера</th>
+                    <th>* Δ Кращого кола</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for lap in rider.getLaps %}
+                    <tr class="
+      {% if lap.isBest  and rider.getTotalLaps > 1 %}best{% endif %}
+      {% if lap.isWorst and rider.getTotalLaps > 1 %}worst{% endif %}
+  ">
+                        <td>{{ lap.getLap }}</td>
+                        <td>{{ lap.getTime }}</td>
+                        <td>{{ lap.getLapPosition }}</td>
+                        <td>{{ lap.getGapToLeader }}</td>
+                        <td>
+                            {% if lap.getDelta == '0.000' %}
+                                <span class="text-success">{{ lap.getDelta }}</span>
+                            {% else %}
+                                <span >{{ lap.getDelta }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    {% endif %}
+{% endfor %}
+
+</body>
+</html>

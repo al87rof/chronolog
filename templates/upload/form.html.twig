@@ -1,0 +1,30 @@
+{# templates/upload_files.html.twig #}
+
+{% extends 'base/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">Uploading results</h1>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file1"><b>Riders list</b></label>
+                <input type="file" class="form-control-file" id="file1" name="file1">
+            </div>
+            <div class="form-group">
+                <label for="file2"><b>App Log</b></label>
+                <input type="file" class="form-control-file" id="file2" name="file2">
+            </div>
+            <div class="form-group">
+                <label for="eventImage"><b>Event Image</b></label>
+                <input type="file" class="form-control-file" id="eventImage" name="eventImage">
+            </div>
+            <div class="form-group">
+                <label for="eventName"><b>Event Name</b></label>
+                <input type="text" class="form-control" id="eventName" name="eventName" placeholder="Enter event name">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}
+{% block footer %}
+{% endblock %}

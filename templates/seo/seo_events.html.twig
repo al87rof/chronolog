@@ -1,0 +1,71 @@
+<meta charset="UTF-8">
+
+<title>{% block title %}Мотоподії України — кантрі-крос, ендуро, хард ендуро | ChronoLog{% endblock %}</title>
+
+{% block meta %}
+
+    {# Basic SEO #}
+    <meta name="description"
+          content="Мотоперегони України: кантрі-крос, ендуро, хард ендуро та ендуро-крос. Дати, локації, результати та онлайн-хронометраж усіх подій на ChronoLog.">
+
+    <meta name="keywords"
+          content="мотоподії Україна, календар ендуро, кантрі-крос Україна, хард ендуро, мотоперегони, результати ендуро, chronoLog">
+
+    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+
+    <link rel="canonical" href="{{ absolute_url(path('events')) }}">
+
+    {# Open Graph #}
+    <meta property="og:title"
+          content="Мотоподії — ендуро та кантрі-крос Україна | ChronoLog">
+
+    <meta property="og:description"
+          content="Дивіться повний список мотоперегонів України: дати стартів, локації, класи та результати з онлайн-хронометражем.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ app.request.uri }}">
+
+    {% if events is defined and events|length > 0 %}
+        <meta property="og:image"
+              content="{{ absolute_url(path('main_page')) }}{{ events[0].getEventImg}}">
+    {% endif %}
+
+    <meta property="og:site_name" content="ChronoLog">
+    <meta property="og:locale" content="uk_UA">
+
+    {# Twitter / X #}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title"
+          content="Мотоподії України — ChronoLog">
+    <meta name="twitter:description"
+          content="Усі події з ендуро та кантрі-кросу: календар, результати, статистика.">
+    <meta name="twitter:image"
+          content="{% if events is defined and events|length > 0 %}{{ absolute_url(path('main_page')) }}{{ events[0].getEventImg}}{% endif %}">
+
+    {# Schema.org ItemList (список подій) #}
+    {% if events is defined and events|length > 0 %}
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Мотоподії України",
+          "itemListElement": [
+            {% for event in events %}
+            {
+              "@type": "SportsEvent",
+              "name": "{{ event.name|e('js') }}",
+              "location": {
+                      "@type": "Place",
+                      "name": "Україна"
+                 },
+              "startDate": "{{ event.date|date('c') }}",
+              "url": "{{ absolute_url(path('result',{'id':event.getHash})) }}",
+              "image": "{{ absolute_url(path('main_page')) }}{{ event.getEventImg}}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+          ]
+        }
+        </script>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+
+{% extends 'base/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% if liveEventId is defined and liveEventId %}
+            <p class="mt-5"> Session ID:{{liveEventId}}</p>
+        {% else%}
+        <h1 class="mt-5">Створити трансляцію</h1>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file1"><b>Список спорсменів</b></label>
+                <input type="file" class="form-control-file" id="file1" name="file1">
+            </div>
+            <div class="form-group">
+                <label for="eventName"><b>Назва події</b></label>
+                <input type="text" class="form-control" id="eventName" name="eventName" >
+            </div>
+            <div class="form-group">
+                <label for="eventName"><b>ключ адміністратора</b></label>
+                <input type="text" class="form-control" id="key" name="key" >
+            </div>
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block footer %}
+{% endblock %}

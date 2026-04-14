@@ -1,0 +1,56 @@
+<meta charset="UTF-8">
+
+<title>
+    Результати заїзду {{ selectedFilter|upper }} — {{ event.name }} {{ event.date|date('Y') }} | Кола, часи, статистика
+</title>
+
+<meta name="description" content="{{ event.getDescription }}">
+<meta name="keywords" content="{{ event.getKeywords }}">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ app.request.uri }}">
+
+{# ================= Open Graph ================= #}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chronolog">
+<meta property="og:title"
+      content="Результати заїзду {{ selectedFilter|upper }} — {{ event.name }} {{ event.date|date('Y') }}">
+<meta property="og:description"
+      content="Підсумкові результати, часи кіл, позиції райдерів та повна статистика заїзду {{ selectedFilter|upper }} на {{ event.name }}.">
+<meta property="og:url" content="{{ app.request.uri }}">
+<meta property="og:locale" content="uk_UA">
+
+{# OG Image (превью) #}
+<meta property="og:image" content="{{ absolute_url(path('main_page')) }}{{ event.eventImg }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt"
+      content="Результати заїзду {{ selectedFilter|upper }} — {{ event.name }}">
+
+{# ================= Twitter / X ================= #}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title"
+      content="Результати заїзду {{ selectedFilter|upper }} — {{ event.name }}">
+<meta name="twitter:description"
+      content="Кола, часи, позиції та статистика райдерів. Повні результати заїзду.">
+<meta name="twitter:image" content="{{ absolute_url(path('main_page')) }}{{ event.eventImg }}">
+
+{# ================= Telegram / Viber ================= #}
+{# Вони використовують OpenGraph, але додаємо fallback #}
+<meta name="telegram:channel" content="@your_channel">
+<meta property="og:image:type" content="image/jpeg">
+
+{# ================= Schema.org ================= #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsEvent",
+  "name": "{{ event.name }}",
+  "startDate": "{{ event.date|date('Y-m-d') }}",
+  "sport": "Enduro / Motocross",
+  "image": "{{ absolute_url(path('main_page')) }}{{ event.getEventImg }}",
+  "location": {
+      "@type": "Place",
+      "name": "Україна"
+     }
+}
+</script>

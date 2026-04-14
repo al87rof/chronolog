@@ -1,0 +1,41 @@
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronoLog — Онлайн-платформа для аналізу та управління даними перегонів</title>
+    <meta name="description"
+          content="ChronoLog — керуйте та аналізуйте дані перегонів у реальному часі. Відстежуйте час кіл, ефективність гонщиків та завантажуйте логи швидко і зручно.">
+    <meta name="keywords"
+          content="гонки, аналіз перегонів, онлайн результати, час кіл, спортивні дані, логи перегонів, ChronoLog">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ChronoLog — Онлайн-платформа для аналізу та управління даними перегонів">
+    <meta property="og:description"
+          content="ChronoLog дозволяє керувати та аналізувати дані перегонів у реальному часі, відстежувати час кіл та ефективність гонщиків.">
+    <meta property="og:image" content="{{ url('main_page', {}) }}assets/seo/og.png">
+    <meta property="og:url" content="{{ url('main_page', {}) }}">
+    <meta property="og:site_name" content="ChronoLog">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ChronoLog — Онлайн-платформа для аналізу та управління даними перегонів">
+    <meta name="twitter:description"
+          content="Відстежуйте час кіл, ефективність гонщиків та завантажуйте логи перегонів у ChronoLog швидко та зручно.">
+    <meta name="twitter:image" content="{{ url('main_page', {}) }}assets/seo/twitter.png">
+    <meta name="twitter:site" content="@ChronoLog">
+    <meta name="twitter:image:alt" content="ChronoLog — онлайн-платформа для аналізу даних перегонів">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="{{ absolute_url(path('main_page')) }}">
+
+    <!-- Structured Data JSON-LD для SEO -->
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "ChronoLog",
+          "alternateName": "ChronoLog Race Timing",
+          "url": "{{ absolute_url(path('main_page')) }}",
+          "description": "Онлайн-платформа для аналізу, хронометражу та управління результатами мотоперегонів у реальному часі"
+        }
+    </script>
