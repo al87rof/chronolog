@@ -1,0 +1,82 @@
+{% extends 'base/base.html.twig' %}
+
+{% block seo %}
+    {% include ('seo/seo_standing_main.html.twig') %}
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container py-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <div>
+                <h4 class="fw-bold mb-1">
+                    Загальні таблиці сезону {{ year }}
+                </h4>
+                <div class="text-muted small">
+                    Оберіть клас для перегляду загального заліку
+                </div>
+            </div>
+
+            <!-- ФІЛЬТР РОКУ -->
+{#            <div class="year-selector">#}
+{#                <label for="yearFilter" class="form-label small fw-semibold mb-2">#}
+{#                    Рік:#}
+{#                </label>#}
+{#                <select id="yearFilter" class="form-select form-select-sm">#}
+{#                    {% for item in yearsFilter %}#}
+{#                        <option value="{{ url('standings_year', {'year': item}) }}" {% if item == year %}selected{% endif %}>{{ item }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#            </div>#}
+        </div>
+
+        <div class="row g-3">
+
+            {% for class in classes %}
+
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+
+                    <a href="{{ url('standings_year_class', {
+                        'year': year,
+                        'class': class.getName
+                    }) }}"
+                       class="text-decoration-none class-card-link">
+
+                        <div class="card border-0 shadow-sm h-100 class-card">
+
+                            <div class="card-body text-center py-4">
+
+                                <div class="fw-bold fs-5 mb-2">
+                                    {{ class.getName }}
+                                </div>
+
+                                <div class="text-muted small">
+                                    Клас
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('yearFilter').addEventListener('change', function() {
+            window.location.href = this.value;
+        });
+    </script>
+
+{% endblock %}
+
+
+{% block footer %}
+    {% include ('base/footer.html.twig') %}
+{% endblock %}

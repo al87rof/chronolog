@@ -1,0 +1,28 @@
+<title>Загальний залік сезону {{ year }} — турнірні таблиці та очки гонщиків</title>
+
+<meta name="description"
+      content="Загальні таблиці сезону {{ year }}. Переглядайте турнірний залік, очки гонщиків та результати по класах. Актуальні standings сезону {{ year }}.">
+
+<meta name="keywords"
+      content="загальний залік {{ year }}, турнірна таблиця {{ year}}, standings {{ year}}, очки гонщиків, результати гонок, мотокрос, ендуро, кантрі крос">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Загальний залік сезону {{ year }}">
+<meta property="og:description"
+      content="Турнірні таблиці сезону {{ year }}: очки гонщиків, результати та загальний залік по класах.">
+<meta property="og:url" content="{{ app.request.uri }}">
+<meta property="og:image" content="{{ absolute_url(path('main_page')) }}assets/seo/og.png">
+<meta property="og:site_name" content="ChronoLog">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Загальний залік сезону {{ year}}">
+<meta name="twitter:description"
+      content="Переглядайте актуальні таблиці та очки гонщиків сезону {{ year }}.">
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ absolute_url(path('standings_year',{'year':year})) }}">
+
+<meta name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">

@@ -1,0 +1,172 @@
+{% extends 'base/base.html.twig' %}
+
+{% block seo %}
+    {% include ('seo/seo_standing_by_class.html.twig') %}
+{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+
+        {# ===================================================== #}
+        {# HEADER                                                #}
+        {# ===================================================== #}
+
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="row g-0 align-items-center">
+
+                <div class="col-12 p-4">
+
+                    <h1 class="h3 fw-bold mb-2">
+                        Загальний залік класу {{ class }} Кантрікрос — {{ year }}
+                    </h1>
+
+                </div>
+            </div>
+        </div>
+
+        {# ===================================================== #}
+        {# SEARCH                                                #}
+        {# ===================================================== #}
+
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <h5 class="mb-0 fw-semibold">
+                Загальний залік
+            </h5>
+
+            <input
+                type="text"
+                id="table-search"
+                class="form-control form-control-sm"
+                placeholder="Пошук гонщика / номер..."
+                style="width:220px"
+            >
+        </div>
+
+        {# ===================================================== #}
+        {# TABLE                                                 #}
+        {# ===================================================== #}
+
+        <div class="card border-0 shadow-sm rounded-4">
+            <table class="table table-sm table-striped table-bordered mb-0 leaderboard-table">
+
+                <thead class="thead-light">
+                <tr>
+                    <th>Позиція</th>
+                    <th>Імʼя гонщика</th>
+                    <th>Загальні очки</th>
+                    <th>Деталі</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% set position = 1 %}
+
+                {% for rider in table.rows %}
+
+                    {# ===== MAIN ROW ===== #}
+                    <tr class="main-row" data-rider-id="{{ loop.index0 }}">
+
+                        <td class="text-center fw-bold">
+                            {% if position == 1 %} 🥇
+                            {% elseif position == 2 %} 🥈
+                            {% elseif position == 3 %} 🥉
+                            {% else %} {{ position }}
+                            {% endif %}
+                        </td>
+
+                        <td><a href="{{ riderCollector. getRiderUrlByName(rider.riderName) }}">{{ rider.riderName }}</a></td>
+
+                        <td><b>{{ rider.totalPoints }}</b></td>
+
+                        <td>
+                            <button
+                                class="btn btn-sm btn-outline-primary toggle-details"
+                                data-rider-id="{{ loop.index0 }}"
+                            >
+                                <span class="toggle-icon">+</span>
+                            </button>
+                        </td>
+                    </tr>
+
+                    {# ===== DETAILS ROW ===== #}
+                    <tr class="details-row" data-rider-id="{{ loop.index0 }}" style="display:none;">
+                        <td colspan="5" class="bg-light">
+
+                            <div class="p-3">
+                                <h6 class="fw-bold mb-3">
+                                    Розподіл очок — {{ rider.riderName }}
+                                </h6>
+
+                                <div class="row">
+                                    {% for event in rider.events %}
+                                        <div class="col-6 col-md-3 col-lg-2 mb-2">
+                                            <div class="border rounded p-2 text-center bg-white">
+                                                <small class="text-muted">{{ event.eventName }}</small>
+                                                <div class="fw-semibold"><b>очки - {{ event.points }}</b></div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    {% set position = position + 1 %}
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    {# ===================================================== #}
+    {# JS                                                    #}
+    {# ===================================================== #}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets/script/search_on_page.js') }}?ver=0.0.3"></script>
+
+    <script>
+        // Toggle details
+        $('.toggle-details').on('click', function () {
+            const riderId = $(this).data('rider-id');
+            const $row = $('tr.details-row[data-rider-id="' + riderId + '"]');
+            const $icon = $(this).find('.toggle-icon');
+
+            const isVisible = $row.is(':visible');
+
+            $row.slideToggle(200, function() {
+                if (isVisible) {
+                    $icon.text('+');
+                } else {
+                    $icon.text('−');
+                }
+            });
+        });
+
+        // Search
+        $('#table-search').on('keyup', function () {
+            const searchText = $(this).val().toLowerCase();
+
+            $('.main-row').each(function () {
+                const rowText = $(this).text().toLowerCase();
+                const riderId = $(this).data('rider-id');
+                const isVisible = rowText.includes(searchText);
+
+                $(this).toggle(isVisible);
+                $('tr.details-row[data-rider-id="' + riderId + '"]').hide();
+                $(this).find('.toggle-details .toggle-icon').text('+');
+            });
+        });
+    </script>
+
+{% endblock %}
+
+{% block footer %}
+    {% include ('base/footer.html.twig') %}
+{% endblock %}

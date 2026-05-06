@@ -1,0 +1,28 @@
+<title>Загальний залік {{ class }} Кантрікрос {{ year}} — таблиця гонщиків та очки</title>
+
+<meta name="description"
+      content="Турнірна таблиця класу  {{ class }} Кантрікрос сезону {{ year}}. Актуальний загальний залік, очки гонщиків, результати етапів та позиції у чемпіонаті.">
+
+<meta name="keywords"
+      content=" {{ class }} {{ year}}, кантрікрос  {{ class }}, загальний залік  {{ class }}, турнірна таблиця  {{ class }}, очки гонщиків, standings  {{ class }}, кантрі крос {{ year}}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Загальний залік {{ class }} Кантрікрос — {{ year}}">
+<meta property="og:description"
+      content="Переглядайте актуальну таблицю гонщиків класу  {{ class }} Кантрікрос сезону {{ year}}: очки, позиції та результати етапів.">
+<meta property="og:url" content="{{ absolute_url(path('standings_year_class',{'year':year,'class':class})) }}">
+<meta property="og:image" content="{{ absolute_url(path('main_page')) }}assets/seo/og.png">
+<meta property="og:site_name" content="Chronolog">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Загальний залік  {{ class }} Кантрікрос — {{ year}}">
+<meta name="twitter:description"
+      content="Турнірна таблиця та очки гонщиків класу  {{ class }} Кантрікрос сезону {{ year}}.">
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ absolute_url(path('standings_year_class',{'year':year,'class':class})) }}">
+
+<meta name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
