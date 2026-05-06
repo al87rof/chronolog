@@ -23,6 +23,10 @@ class RidersDictionary
     #[ORM\Column(length: 100)]
     private ?string $normalizedName = null;
 
+    #[ORM\ManyToOne(targetEntity: Riders::class)]
+    #[ORM\JoinColumn(name: 'rider_id', referencedColumnName: 'id')]
+    private ?Riders $rider = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,6 +62,18 @@ class RidersDictionary
     public function setNormalizedName(string $normalizedName): static
     {
         $this->normalizedName = $normalizedName;
+        return $this;
+    }
+
+    public function getRider(): ?Riders
+    {
+        return $this->rider;
+    }
+
+    public function setRider(?Riders $rider): self
+    {
+        $this->rider = $rider;
+
         return $this;
     }
 }

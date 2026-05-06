@@ -26,6 +26,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class DefaultController extends AbstractController
 {
 
+
     public function __construct(
         private readonly EventService $eventService,
         private readonly LiveEventService $liveEventService,
@@ -130,7 +131,7 @@ class DefaultController extends AbstractController
     public function resultAction(Request $request, $id): ?Response
     {
 
-        $selectedFilter = $request->get('filter', 'all');
+        $selectedFilter = $request->get('filter', EventFilter::DEFAULT_FILTER);
 
         /** @var Events $event */
         $event = $this->liveEventService->getEventByHash($id);
@@ -163,7 +164,7 @@ class DefaultController extends AbstractController
     public function lapchartAction(Request $request, $id): ?Response
     {
         date_default_timezone_set('Europe/Kiev');
-        $selectedFilter = trim($request->get('filter', 'all'));
+        $selectedFilter = trim($request->get('filter', EventFilter::DEFAULT_FILTER));
 
         /** @var Events $event */
         $event = $this->liveEventService->getEventByHash($id);

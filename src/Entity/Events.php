@@ -50,6 +50,9 @@ class Events
     #[ORM\Column(name: 'search_tags', type: 'text', nullable: false)]
     private string $searchTags;
 
+    #[ORM\Column(name: 'is_official', type: 'integer', nullable: false)]
+    private int $isOfficial;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -193,5 +196,21 @@ class Events
     public function getRidersListDsqArray(): array
     {
         return explode("\n", $this->ridersListDsq);
+    }
+
+    /**
+     * @param int $isOfficial
+     */
+    public function setIsOfficial(int $isOfficial): void
+    {
+        $this->isOfficial = $isOfficial;
+    }
+
+    /**
+     * @return int
+     */
+    public function isOfficial(): int
+    {
+        return $this->isOfficial;
     }
 }

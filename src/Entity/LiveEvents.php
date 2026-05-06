@@ -32,7 +32,7 @@ class LiveEvents
     #[ORM\Column(name: 'description', type: 'text', nullable: true, columnDefinition: 'LONGTEXT')]
     private string $description;
 
-    #[ORM\Column(name: 'event_img', type: 'string', length: 500, nullable: false, columnDefinition: 'LONGTEXT')]
+    #[ORM\Column(name: 'event_img', type: 'string', length: 500)]
     private ?string $eventImg;
 
     #[ORM\Column(name: 'result', type: 'text', nullable: true, columnDefinition: 'LONGTEXT')]

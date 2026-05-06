@@ -498,3 +498,62 @@
 /* ⚪ АУТСАЙДЕРЫ */
 .class-11 { background-color: #e0e0e0 !important; }
 .class-12 { background-color: #f5f5f5 !important; }
+
+.class-card {
+    transition: 0.2s ease;
+    border-radius: 12px;
+}
+
+.class-card-link:hover .class-card {
+    transform: translateY(-4px);
+    box-shadow: 0 .75rem 2rem rgba(0,0,0,.12);
+}
+/* ================= FOOTER STICKY ================= */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main, .container {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+/* ================= YEAR SELECTOR ================= */
+
+.year-selector {
+    min-width: 140px;
+}
+
+.year-selector .form-select {
+    border: 2px solid #0d6efd;
+    padding: 6px 10px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.year-selector .form-select:focus {
+    border-color: #0a58ca;
+    box-shadow: 0 0 0 0.15rem rgba(13,110,253,.25);
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .year-selector {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .year-selector .form-select {
+        font-size: 14px;
+    }
+}

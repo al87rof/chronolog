@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Riders;
 use App\Entity\RidersDictionary;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

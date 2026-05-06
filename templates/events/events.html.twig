@@ -54,15 +54,12 @@
 
                                 <!-- Meta -->
                                 <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+                                        <span>👁 {{ event.getCount|default(0) }}</span>
 
-                                <span>
-                                    👁 {{ event.getCount|default(0) }}
-                                </span>
+                                    {% include ('fmsu/fmsu_official_status.html.twig') %}
 
                                     {% if event.getDate %}
-                                        <span class="badge bg-light text-dark border">
-                                        {{ event.getDate|date("d.m.Y") }}
-                                    </span>
+                                        <span class="badge bg-light text-dark border">{{ event.getDate|date("d.m.Y") }}</span>
                                     {% endif %}
 
                                 </div>

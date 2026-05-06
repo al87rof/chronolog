@@ -42,6 +42,17 @@ robots:
     path: /404/
     defaults: { _controller: App\Controller\DefaultController::notFoundAction }
 
+standings_year:
+    path: /standings/{year}
+    defaults: { _controller: App\Controller\StandingsController::standingsYearAction }
+    requirements:
+        year: "[0-9]{4}"
+standings_year_class:
+    path: /standings/{year}/{class}
+    defaults: { _controller: App\Controller\StandingsController::standingsYearClassAction }
+    requirements:
+        year: "[0-9]{4}"
+
 # LIVE
 create_live_event:
     path: /event/live/create

@@ -92,6 +92,7 @@ class EventService
                 $event->setSearchTags('');
                 $event->setTypeId(1);
                 $event->setRidersListDsq('');
+                $event->setIsOfficial(0);
 
                 $this->entityManager->persist($event);
                 $this->entityManager->flush();

@@ -6,8 +6,8 @@ namespace App\Service\RiderProvider;
 use App\Entity\Events;
 use App\Entity\Riders;
 use App\Entity\RidersDictionary;
+use App\Repository\RidersRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Builder\Class_;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -252,19 +252,24 @@ class RiderCollector
 
     /**
      * @param $name
-     * @return string|null
+     * @return string
      */
-    public function getRiderUrlByName($name){
-        $riderData = explode(" ",$name);
-
-        $first = $riderData[0] ?? ' ';
-        $second = $riderData[1] ?? ' ';
-
-        $result = $this->entityManager->getRepository(RidersDictionary::class)->searchRider($first." ".$second);
-        if(isset($result[0]['r_id'])){
-            return $this->router->generate('rider',['id'=>$result[0]['r_id']], UrlGeneratorInterface::ABSOLUTE_PATH);
+    public function getRiderUrlByName($name): string{
+        /** @var Riders $rider */
+        $rider = $this->getRiderByName($name);
+        if($rider instanceof Riders){
+            return $this->router->generate('rider',['id'=>$rider->getId()], UrlGeneratorInterface::ABSOLUTE_PATH);
         }
         return "#";
+    }
+
+
+    public function getRiderByName($name): Riders|string {
+        $riderData = explode(" ",$name);
+        $first = $riderData[0] ?? ' ';
+        $second = $riderData[1] ?? ' ';
+        $rider =  $this->entityManager->getRepository(Riders::class)->searchRiderV2($first." ".$second);
+        return $rider ?: '#';
     }
 
 }

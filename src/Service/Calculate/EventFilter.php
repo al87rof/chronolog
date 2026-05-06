@@ -8,7 +8,7 @@ use App\Model\EventRider;
 class EventFilter
 {
     private const JUNIOR_CLASSES = ['65см', '50см'];
-
+    public const DEFAULT_FILTER = 'all';
     /**
      * @param array $result
      * @param $selectedFilter
@@ -19,7 +19,7 @@ class EventFilter
     {
 
         $filtered = [];
-        $filter = ['all'=>'All'];
+        $filter = [self::DEFAULT_FILTER => 'All'];
         $result = $this->setDSQ($result,$dsqRiders);
 
         foreach ($result as $riderNumber =>$riderRaw){
@@ -95,7 +95,7 @@ class EventFilter
                 $item['laps_times'] = [];
                 $item['status'] = 'DSQ';
 
-                $dsq[$riderId] = $item; // откладываем в конец
+                $dsq[$riderId] = $item;
 
             } else {
                 $normal[$riderId] = $item;
