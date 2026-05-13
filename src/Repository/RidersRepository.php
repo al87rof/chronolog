@@ -19,10 +19,10 @@ class RidersRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(
-                'App\Entity\RidersDictionary',
+                RidersDictionary::class,
                 'rd',
                 'WITH',
-                'rd.riderId = r.id'
+                'rd.rider = r'
             )
             ->where('rd.originalName LIKE :name')
             ->setParameter('name', '%' . $name . '%')

@@ -17,7 +17,8 @@ class RidersDictionaryRepository extends ServiceEntityRepository
     public function searchRider(string $name): array
     {
         return $this->createQueryBuilder('rd')
-            ->select('rd.riderId AS r_id')
+            ->join('rd.rider', 'r')
+            ->select('r.id AS r_id')
             ->where('rd.originalName LIKE :name')
             ->setParameter('name', '%' . $name . '%')
             ->getQuery()

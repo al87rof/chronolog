@@ -14,9 +14,6 @@ class RidersDictionary
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $riderId = null;
-
     #[ORM\Column(length: 100)]
     private ?string $originalName = null;
 
@@ -32,16 +29,6 @@ class RidersDictionary
         return $this->id;
     }
 
-    public function getRiderId(): ?int
-    {
-        return $this->riderId;
-    }
-
-    public function setRiderId(int $riderId): static
-    {
-        $this->riderId = $riderId;
-        return $this;
-    }
 
     public function getOriginalName(): ?string
     {

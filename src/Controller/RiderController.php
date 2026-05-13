@@ -24,7 +24,7 @@ class RiderController extends AbstractController
            throw new \Exception('Not Found');
         }
 
-        $riderData = $this->ridersCollector->searchEventsByRiderId($id);
+        $riderData = $this->ridersCollector->searchEventsByRiderId($rider);
 
         $params  = [
             'rider'=>$rider,

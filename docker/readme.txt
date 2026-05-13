@@ -16,3 +16,9 @@ docker exec -it symfony_app chmod -R 777 /var/www/var/cache
 wsl --shutdown
 
 wsl -d Ubuntu
+
+
+make:migration — генерирует новый файл миграции на основе изменений в сущностях.
+doctrine:migrations:migrate — применяет все новые миграции к базе данных.
+doctrine:migrations:status — показывает текущее состояние (какие миграции уже выполнены).
+doctrine:migrations:execute --down [версия] — позволяет откатить конкретную миграцию, если что-то пошло не так.

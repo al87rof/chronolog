@@ -70,3 +70,25 @@ live_event_ajax:
 api:
     path: /api/live
     defaults: { _controller: App\Controller\ApiController::updLiveEventsAction }
+
+#statiс
+#privacy_policy:
+#    path: /privacy-policy
+#    defaults: { _controller: App\Controller\LegalController::privacyPolicyAction }
+#
+#terms_of_service:
+#    path: /terms-of-service
+#    defaults: { _controller: App\Controller\LegalController::termsOfServiceAction }
+#
+#about:
+#    path: /about
+#    defaults: { _controller: App\Controller\LegalController::aboutAction }
+#
+#contact:
+#    path: /contact
+#    defaults: { _controller: App\Controller\LegalController::contactAction }
+#
+#submit_contact:
+#    path: /contact/submit
+#    defaults: { _controller: App\Controller\LegalController::submitContactAction }
+#    methods: [POST, GET]

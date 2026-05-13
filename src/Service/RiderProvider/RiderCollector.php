@@ -84,20 +84,33 @@ class RiderCollector
                     }
                 }
 
-                if(!$isIsset){
-                    $rr = new Riders();
-                    $rr->setTeam('');
-                    $rr->setEventsIds('');
-                    $rr->setName($rider);
+                $this->entityManager->beginTransaction();
 
-                    $this->entityManager->persist($rr);
-                    $this->entityManager->flush($rr);
+                try {
 
-                    foreach ($variants as $query){
-                        $this->save($query,$rr->getId());
+                    if (!$isIsset) {
+
+                        $rr = new Riders();
+                        $rr->setTeam('');
+                        $rr->setEventsIds('');
+                        $rr->setName($rider);
+                        $this->entityManager->persist($rr);
+
+                        foreach ($variants as $query) {
+                            $this->save($query, $rr);
+                        }
+
+                        $this->entityManager->flush();
+                        echo "ADD NEW RIDER : {$rr->getId()} | $rider\n";
                     }
-                    echo "ADD NEW  RIDER : $rider\n";
-                    $isIsset = true;
+
+                    $this->entityManager->commit();
+
+                } catch (\Throwable $e) {
+
+                    $this->entityManager->rollback();
+
+                    throw $e;
                 }
 
 
@@ -116,17 +129,15 @@ class RiderCollector
         return (bool)$result;
     }
 
-    private function save($rider,$id){
+    private function save($rider,$rr){
         $res = $this->entityManager->getRepository(RidersDictionary::class)->searchRider($rider);
 
         if(!$res){
             $r = new RidersDictionary();
             $r->setOriginalName($rider);
             $r->setNormalizedName('');
-            $r->setRiderId($id);
+            $r->setRider($rr);
             $this->entityManager->persist($r);
-            $this->entityManager->flush($r);
-
         }
     }
 
@@ -166,11 +177,11 @@ class RiderCollector
 
 
 
-    public function searchEventsByRiderId($riderId): array
+    public function searchEventsByRiderId($rider): array
     {
         $riderDic = $this->entityManager
             ->getRepository(RidersDictionary::class)
-            ->findBy(['riderId' => $riderId]);
+            ->findBy(['rider' => $rider]);
 
         $variants = [];
         /** @var RidersDictionary $item */
